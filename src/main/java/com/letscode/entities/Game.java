@@ -30,16 +30,16 @@ public class Game implements Serializable {
 	@OneToMany(mappedBy = "game")
 	private List<Quizz> quizzes = new ArrayList<>();
 
-	private Long correct;
-	private Long wrong;
+	private Integer correct;
+	private Integer wrong;
 	private Boolean openGame;
-	private Long score;
+	private Integer score;
 
 	public Game() {
 		super();
 	}
 
-	public Game(Long id, User user, Long correct, Long wrong, Boolean openGame, Long score) {
+	public Game(Long id, User user, Integer correct, Integer wrong, Boolean openGame, Integer score) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -65,19 +65,19 @@ public class Game implements Serializable {
 		this.user = user;
 	}
 
-	public Long getCorrect() {
+	public Integer getCorrect() {
 		return correct;
 	}
 
-	public void setCorrect(Long correct) {
+	public void setCorrect(Integer correct) {
 		this.correct = correct;
 	}
 
-	public Long getWrong() {
+	public Integer getWrong() {
 		return wrong;
 	}
 
-	public void setWrong(Long wrong) {
+	public void setWrong(Integer wrong) {
 		this.wrong = wrong;
 	}
 
@@ -93,11 +93,11 @@ public class Game implements Serializable {
 		return quizzes;
 	}
 
-	public Long getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(Long score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 

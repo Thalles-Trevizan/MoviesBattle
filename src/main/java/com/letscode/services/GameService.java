@@ -41,5 +41,25 @@ public class GameService {
 		User user = authService.authenticated();		
 		return repository.findByUser(user);
 	}
+	
+	@Transactional
+	public Game UpdateGame(Long gameId, Boolean result) {
+		Game game = repository.getOne(gameId);
+		
+		if(result == true) {
+			game.setCorrect(game.getCorrect() + 1);
+			Integer newScore = game.getCorrect()*100;
+			game.setScore(newScore);
+		}else {
+			game.setWrong(game.getWrong() + 1);
+		}
+		
+		if(game.getWrong() >= 3L) {
+			game.setOpenGame(false);
+		}
+		repository.save(game);
+		
+		return game;
+	}
 
 }

@@ -26,14 +26,14 @@ public class Quizz implements Serializable {
 
 	private String movie1;
 	private String movie2;
-	private Integer answer;
+	private Long answer;
 	private Boolean result;
 
 	public Quizz() {
 		super();
 	}
 
-	public Quizz(Game game, String movie1, String movie2, Integer answer, Boolean result) {
+	public Quizz(Game game, String movie1, String movie2, Long answer, Boolean result) {
 		this.game = game;
 		this.movie1 = movie1;
 		this.movie2 = movie2;
@@ -65,11 +65,11 @@ public class Quizz implements Serializable {
 		this.movie2 = movie2;
 	}
 
-	public Integer getAnswer() {
+	public Long getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(Integer answer) {
+	public void setAnswer(Long answer) {
 		this.answer = answer;
 	}
 

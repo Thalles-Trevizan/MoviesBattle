@@ -17,15 +17,15 @@ public class GameDTO implements Serializable {
 
 	private List<QuizzGameDTO> quizzes = new ArrayList<>();
 
-	private Long correct;
-	private Long wrong;
-	private Long score;
+	private Integer correct;
+	private Integer wrong;
+	private Integer score;
 
 	public GameDTO() {
 		super();
 	}
 
-	public GameDTO(String response, UserGameDTO user, Long correct, Long wrong, Long score) {
+	public GameDTO(String response, UserGameDTO user, Integer correct, Integer wrong, Integer score) {
 		super();
 		this.response = response;
 		this.user = user;
@@ -62,27 +62,27 @@ public class GameDTO implements Serializable {
 		this.user = user;
 	}
 
-	public Long getCorrect() {
+	public Integer getCorrect() {
 		return correct;
 	}
 
-	public void setCorrect(Long correct) {
+	public void setCorrect(Integer correct) {
 		this.correct = correct;
 	}
 
-	public Long getWrong() {
+	public Integer getWrong() {
 		return wrong;
 	}
 
-	public void setWrong(Long wrong) {
+	public void setWrong(Integer wrong) {
 		this.wrong = wrong;
 	}
 
-	public Long getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(Long score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 

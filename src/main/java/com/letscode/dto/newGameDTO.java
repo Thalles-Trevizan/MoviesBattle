@@ -7,7 +7,7 @@ import com.letscode.entities.Game;
 public class newGameDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private Long gameId;
 	private String response;
 	private UserGameDTO user;
 	private QuizzGameDTO quizz;
@@ -19,14 +19,14 @@ public class newGameDTO implements Serializable {
 
 	public newGameDTO(Long id, String response, UserGameDTO user, Boolean openGame) {
 		super();
-		this.id = id;
+		gameId = id;
 		this.response = response;
 		this.user = user;
 		this.openGame = openGame;
 	}
 
 	public newGameDTO(Game entity) {
-		id = entity.getId();
+		gameId = entity.getId();
 		user = new UserGameDTO(entity.getUser());
 		openGame = entity.getOpenGame();
 	}
@@ -48,11 +48,11 @@ public class newGameDTO implements Serializable {
 	}
 
 	public Long getId() {
-		return id;
+		return gameId;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		gameId = id;
 	}
 
 	public QuizzGameDTO getQuizz() {

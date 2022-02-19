@@ -10,6 +10,7 @@ import com.letscode.client.GetClientMovies;
 import com.letscode.dto.GetMoviePropDTO;
 import com.letscode.dto.GetMoviesDTO;
 import com.letscode.dto.GetPageMoviesDTO;
+import com.letscode.dto.newGameDTO;
 import com.letscode.entities.Game;
 import com.letscode.entities.Quizz;
 import com.letscode.repositories.GameRepository;
@@ -34,8 +35,8 @@ public class QuizzService {
 	@Autowired
 	private QuizzRepository repository;
 
-//	@Autowired
-//	private GameService gameService;
+	@Autowired
+	private GameService gameService;
 	
 	@Transactional
 	public Quizz insertNewQuizz(Long gameId) {
@@ -50,7 +51,7 @@ public class QuizzService {
 		Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
 		Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
 		
-		Integer answer = movie1Points > movie2Points ? 1 : 2;
+		Long answer = movie1Points > movie2Points ? 1L : 2L;
 		
 		Game game = gameRepository.getOne(gameId);
 		
@@ -99,22 +100,40 @@ public class QuizzService {
 		return movieProp;
 	}
 
-//	@Transactional
-//	public Quizz validateAnswer(Long quizzId, Game userGame) {
-//		
-//		Quizz quizz = repository.getOne(quizzId);
-//		
-//		
-//		
-//		
-//
-//		
-//		System.out.println(quizz.getId() + " " + quizz.getAnswer());
-////		Quizz lastQuizz = quizzes.get(); 
-//		
-//		
-//		
-//		
-//		return null;
-//	}
+	@Transactional
+	public Quizz validateAnswerAndNewQuizz(Long quizzId, Long answerId, newGameDTO gameDto) {
+		
+		Boolean result = false;
+		Quizz quizz = repository.getOne(quizzId);
+		
+		if (quizz.getAnswer() == answerId) {
+			gameDto.setResponse("Parabéns! você acertou a ultima resposta, ganhou 1 ponto, agora, será que acerta essa ?");
+			result = true;
+			quizz.setResult(result);
+			repository.save(quizz);
+		}
+		
+		gameService.UpdateGame(gameDto.getId(), result);
+		
+		
+		
+		GetMoviePropDTO movie1 = chooseMovie();
+		GetMoviePropDTO movie2 = chooseMovie();
+
+		//Valida se o novo par de filme são iguais aos anteriores ou iguais entre si
+		while (movie1.getImdbID() == movie2.getImdbID() || (quizz.getMovie1() == movie1.getImdbID() && quizz.getMovie2() == movie2.getImdbID())
+				|| (quizz.getMovie1() == movie2.getImdbID() && quizz.getMovie2() == movie1.getImdbID()) ) {
+			movie2 = chooseMovie();
+		}
+		
+		Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
+		Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
+		
+		Long answer = movie1Points > movie2Points ? 1L : 2L;
+		
+		Game game = gameRepository.getOne(gameDto.getId());
+		Quizz newQuizz = new Quizz(game, movie1.getImdbID(), movie2.getImdbID(), answer, false);
+		
+		return newQuizz;
+	}
 }

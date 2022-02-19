@@ -39,32 +39,4 @@ public class GameController {
 				.buildAndExpand(newGame.getId()).toUri();
 		return ResponseEntity.created(uri).body(newGame);
 	}
-	
-//	@PostMapping(value = "/answer/{quizzId}")
-//	public ResponseEntity <newGameDTO> insertAnswerGame(@PathVariable Long quizzId){
-//
-//		Game userGame = service.validateUserGame();
-//		
-//		if (userGame == null || userGame.getOpenGame() == false) {
-//			throw new UnauthorizedException(userGame.getUser().getName() + ", você não possui um jogo aberto!");
-//		}
-//		
-//		Quizz quizz = quizzService.validateAnswer(quizzId, userGame);
-//		
-//		
-//		
-//		
-//		
-//		newGameDTO newGame = service.insertNewGame();
-//		
-//		QuizzGameDTO quizzDTO = new QuizzGameDTO(quizz);
-//		newGame.setQuizz(quizzDTO);
-//		
-//		newGame.setResponse("Jogo Iniciado!!");
-//		
-//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//				.buildAndExpand(newGame.getId()).toUri();
-//		return ResponseEntity.created(uri).body(newGame);
-//	}
-
 }
