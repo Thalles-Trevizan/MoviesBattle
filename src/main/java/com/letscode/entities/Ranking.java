@@ -20,19 +20,27 @@ public class Ranking implements Serializable {
 
 	private Long gameId;
 	private String nameUser;
-	private Long score;
+	private int score;
 
 	public Ranking() {
 		super();
 	}
 
-	public Ranking(Long id, Long gameId, String nameUser, Long score) {
+	public Ranking(Long id, Long gameId, String nameUser, int score) {
 		super();
 		this.id = id;
 		this.gameId = gameId;
 		this.nameUser = nameUser;
 		this.score = score;
 	}
+	
+	public Ranking(Game game) {
+		this.gameId = game.getId();
+		this.nameUser = game.getUser().getName();
+		this.score = game.getScore();
+	}
+	
+	
 
 	public Long getId() {
 		return id;
@@ -58,11 +66,11 @@ public class Ranking implements Serializable {
 		this.nameUser = nameUser;
 	}
 
-	public Long getScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public void setScore(Long score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 
