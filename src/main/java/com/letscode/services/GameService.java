@@ -26,8 +26,11 @@ public class GameService {
 		User user = authService.authenticated();		
 		Game entity = new Game();
 		Game validateFirstGame = validateUserGame();
-		if (validateFirstGame != null) {
-			throw new UnauthorizedException("Usuário já possui um jogo iniciado");
+		
+		if (validateFirstGame == null || validateFirstGame.getOpenGame() == false) {
+			System.out.println("Primerio jogo!");
+		}else {
+			throw new UnauthorizedException("Usuário já possui um jogo iniciado, Favor iniciar um novo jogo!");
 		}
 		
 		entity.setUser(user);
@@ -39,7 +42,7 @@ public class GameService {
 	@Transactional(readOnly = true)
 	public Game validateUserGame() {
 		User user = authService.authenticated();		
-		return repository.findByUser(user);
+		return repository.findByUserAndOpenGame(user, true);
 	}
 	
 	@Transactional

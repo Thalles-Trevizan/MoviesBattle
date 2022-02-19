@@ -111,29 +111,38 @@ public class QuizzService {
 			result = true;
 			quizz.setResult(result);
 			repository.save(quizz);
+		}else {
+			gameDto.setResponse("ERRRROOU! você errou o ultimo quizz, não marcou ponto, agora, será que consegue acertar essa ?");
 		}
 		
-		gameService.UpdateGame(gameDto.getId(), result);
+		Game game = gameService.UpdateGame(gameDto.getId(), result);
 		
-		
-		
-		GetMoviePropDTO movie1 = chooseMovie();
-		GetMoviePropDTO movie2 = chooseMovie();
-
-		//Valida se o novo par de filme são iguais aos anteriores ou iguais entre si
-		while (movie1.getImdbID() == movie2.getImdbID() || (quizz.getMovie1() == movie1.getImdbID() && quizz.getMovie2() == movie2.getImdbID())
-				|| (quizz.getMovie1() == movie2.getImdbID() && quizz.getMovie2() == movie1.getImdbID()) ) {
-			movie2 = chooseMovie();
+		if (game.getOpenGame() == true) {
+			GetMoviePropDTO movie1 = chooseMovie();
+			GetMoviePropDTO movie2 = chooseMovie();
+			
+			//Valida se o novo par de filme são iguais aos anteriores ou iguais entre si
+			while (movie1.getImdbID() == movie2.getImdbID() || (quizz.getMovie1() == movie1.getImdbID() && quizz.getMovie2() == movie2.getImdbID())
+					|| (quizz.getMovie1() == movie2.getImdbID() && quizz.getMovie2() == movie1.getImdbID()) ) {
+				movie2 = chooseMovie();
+			}
+			
+			Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
+			Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
+			
+			Long answer = movie1Points > movie2Points ? 1L : 2L;
+			
+			Game gameCurrently = gameRepository.getOne(gameDto.getId());
+			Quizz newQuizz = new Quizz(gameCurrently, movie1.getImdbID(), movie2.getImdbID(), answer, false);
+			
+			repository.save(newQuizz);
+			return newQuizz;
+		}else {
+			gameDto.setResponse("ERRRROOU! você errou o 3º quizz e perdeu o jogo!, o seu score foi de : " + game.getScore() + ", inicie um novo jogo para tentar novamente!");
+			gameDto.setOpenGame(game.getOpenGame());
+			//Popilar o ranking
+			return new Quizz();
 		}
 		
-		Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
-		Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
-		
-		Long answer = movie1Points > movie2Points ? 1L : 2L;
-		
-		Game game = gameRepository.getOne(gameDto.getId());
-		Quizz newQuizz = new Quizz(game, movie1.getImdbID(), movie2.getImdbID(), answer, false);
-		
-		return newQuizz;
 	}
 }

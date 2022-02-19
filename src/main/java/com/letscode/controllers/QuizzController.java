@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.letscode.dto.GetMoviePropDTO;
 import com.letscode.dto.GetPageMoviesDTO;
 import com.letscode.dto.QuizzGameDTO;
 import com.letscode.dto.newGameDTO;
@@ -48,6 +47,11 @@ public class QuizzController {
 	@PostMapping(value = "/answer/{quizzId}/{answerId}")
 	public ResponseEntity <newGameDTO> insertAnswerGame(@PathVariable Long quizzId, @PathVariable Long answerId){
 		Game userGame = gameService.validateUserGame();
+		
+		if(userGame == null) {
+			throw new UnauthorizedException("Usuário já possui um jogo iniciado, Favor iniciar um novo jogo!");
+		}else {
+		
 		newGameDTO gameDto = new newGameDTO(userGame);
 		
 		if (userGame == null || userGame.getOpenGame() == false) {
@@ -55,20 +59,12 @@ public class QuizzController {
 		}
 		
 		Quizz newQuizz = service.validateAnswerAndNewQuizz(quizzId, answerId, gameDto);
-		
-		
-		
-		
-		
-		
-		
-//		QuizzGameDTO quizzDTO = new QuizzGameDTO(quizz);
-//		newGame.setQuizz(quizzDTO);
+		QuizzGameDTO newQuizzDTO = new QuizzGameDTO(newQuizz);
+		gameDto.setQuizz(newQuizzDTO);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newQuizz.getId()).toUri();
 		return ResponseEntity.created(uri).body(gameDto);
+		}
 	}
-	
-
 }
