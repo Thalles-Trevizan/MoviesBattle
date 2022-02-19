@@ -65,4 +65,8 @@ public class GameService {
 		return game;
 	}
 
+	public void finishGame(Game game) {
+		//terminar
+	}
+
 }

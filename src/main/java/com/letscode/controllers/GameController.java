@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,7 @@ public class GameController {
 			throw new UnauthorizedException("Você não possui nenhum jogo aberto, inicie um novo jogo para jogar!");
 		}else {
 			rankingService.saveGame(userGame);
+			service.finishGame(userGame);
 			//Terminar o finish do game
 			return null;
 		}
