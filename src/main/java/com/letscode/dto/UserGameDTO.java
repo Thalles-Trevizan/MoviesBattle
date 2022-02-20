@@ -18,7 +18,7 @@ public class UserGameDTO implements Serializable {
 		super();
 	}
 
-	public UserGameDTO(Long id, String name, String email) {
+	public UserGameDTO(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;

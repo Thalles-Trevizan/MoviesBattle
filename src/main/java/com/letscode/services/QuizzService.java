@@ -38,6 +38,9 @@ public class QuizzService {
 	@Autowired
 	private GameService gameService;
 	
+	@Autowired
+	private RankingService rankingService;
+	
 	@Transactional
 	public Quizz insertNewQuizz(Long gameId) {
 	
@@ -129,7 +132,6 @@ public class QuizzService {
 			
 			Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
 			Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
-			
 			Long answer = movie1Points > movie2Points ? 1L : 2L;
 			
 			Game gameCurrently = gameRepository.getOne(gameDto.getId());
@@ -138,9 +140,10 @@ public class QuizzService {
 			repository.save(newQuizz);
 			return newQuizz;
 		}else {
-			gameDto.setResponse("ERRRROOU! você errou o 3º quizz e perdeu o jogo!, o seu score foi de : " + game.getScore() + ", inicie um novo jogo para tentar novamente!");
+			gameDto.setResponse("ACABOU! você errou o 3º quizz e perdeu o jogo!, o seu score foi de : " + game.getScore() + ", inicie um novo jogo para tentar novamente!");
 			gameDto.setOpenGame(game.getOpenGame());
-			//Popilar o ranking
+			rankingService.saveGame(game);
+			gameService.finishGame(game);
 			return new Quizz();
 		}
 		

@@ -19,8 +19,6 @@ public class GameService {
 	@Autowired
 	private AuthService authService;
 	
-	
-	
 	@Transactional
 	public newGameDTO insertNewGame() {
 		User user = authService.authenticated();		
@@ -65,8 +63,10 @@ public class GameService {
 		return game;
 	}
 
+	@Transactional
 	public void finishGame(Game game) {
-		//terminar
+		game.setOpenGame(false);
+		repository.save(game);
 	}
 
 }

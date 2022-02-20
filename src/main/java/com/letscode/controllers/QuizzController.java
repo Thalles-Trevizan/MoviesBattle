@@ -49,7 +49,7 @@ public class QuizzController {
 		Game userGame = gameService.validateUserGame();
 		
 		if(userGame == null) {
-			throw new UnauthorizedException("Usuário já possui um jogo iniciado, Favor iniciar um novo jogo!");
+			throw new UnauthorizedException("Usuário não possui nenhum jogo iniciado, Favor iniciar um novo jogo!");
 		}else {
 		
 		newGameDTO gameDto = new newGameDTO(userGame);

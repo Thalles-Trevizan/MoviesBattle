@@ -2,8 +2,6 @@ package com.letscode.dto;
 
 import java.io.Serializable;
 
-import com.letscode.entities.Game;
-
 public class GameOverDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -11,14 +9,13 @@ public class GameOverDTO implements Serializable {
 
 	private UserGameDTO user;
 
-	private Game game;
+	private GameFinishDTO game;
 
 	public GameOverDTO() {
 		super();
 	}
 
-	public GameOverDTO(String response, UserGameDTO user, Game game) {
-		super();
+	public GameOverDTO(String response, UserGameDTO user, GameFinishDTO game) {
 		this.response = response;
 		this.user = user;
 		this.game = game;
@@ -40,11 +37,11 @@ public class GameOverDTO implements Serializable {
 		this.user = user;
 	}
 
-	public Game getGame() {
+	public GameFinishDTO getGame() {
 		return game;
 	}
 
-	public void setGame(Game game) {
+	public void setGame(GameFinishDTO game) {
 		this.game = game;
 	}
 }
