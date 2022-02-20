@@ -23,6 +23,8 @@ Pré-requisitos: Java 11, Postman
 
 Obs: Apenas o Backend construido, logo, você irá receber o ImdbId de dois filmes, por enquanto, se quiser saber há quais filmes os ids se referenciam, você pode chamar a rota no seu navegador http://www.omdbapi.com/?apikey=8153fddd&i=tt0096895, alterando o campo i para o id recebido.
 
+Primeiramente, clone o projeto e o execute-o na sua maquina
+
 ```bash
 # clonar repositório
 git clone https://github.com/Thalles-Trevizan/MoviesBattle.git
