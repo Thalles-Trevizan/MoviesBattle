@@ -66,26 +66,12 @@
 			<groupId>org.springframework.security.oauth.boot</groupId>
 			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-			<optional>true</optional>
-		</dependency> -->
 		<!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-jackson -->
  		<dependency>
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-jackson</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-mock -->
-<!-- 		<dependency>
-			<groupId>io.github.openfeign</groupId>
-			<artifactId>feign-mock</artifactId>
-			<scope>test</scope>
-		</dependency> -->
 	</dependencies>
 
 
