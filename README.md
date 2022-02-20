@@ -27,9 +27,7 @@ Obs: Apenas o Backend construido, logo, você irá receber o ImdbId de dois film
 # clonar repositório
 git clone https://github.com/Thalles-Trevizan/MoviesBattle.git
 
-# entrar na pasta do projeto back end
-cd backend
-
+# entrar na pasta do projeto 
 # executar o projeto
 ./mvnw spring-boot:run
 ```
