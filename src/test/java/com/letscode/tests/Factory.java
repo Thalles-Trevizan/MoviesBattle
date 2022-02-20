@@ -1,7 +1,7 @@
 package com.letscode.tests;
 
-import com.letscode.dto.UserDTO;
 import com.letscode.dto.UserInsertDTO;
+import com.letscode.entities.Game;
 import com.letscode.entities.Role;
 import com.letscode.entities.User;
 
@@ -17,9 +17,9 @@ public class Factory {
 		return role;
 	}
 
-	public static UserDTO createUserDTO() {
-		User user = createUser();
-		return new UserDTO(user);
+	public static Game createGame() {
+		Game game = new Game(1L, createUser(), 1,1, true, 100);
+		return game;
 	}
 
 	public static UserInsertDTO createUserInsertDTO() {

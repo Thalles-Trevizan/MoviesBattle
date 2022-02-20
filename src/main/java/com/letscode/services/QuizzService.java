@@ -33,13 +33,15 @@ public class QuizzService {
 	private GameRepository gameRepository;
 
 	@Autowired
-	private QuizzRepository repository;
+	private GameService gameService;
 
 	@Autowired
-	private GameService gameService;
-	
-	@Autowired
 	private RankingService rankingService;
+
+	@Autowired
+	private QuizzRepository repository;
+
+	
 	
 	@Transactional
 	public Quizz insertNewQuizz(Long gameId) {
@@ -50,16 +52,10 @@ public class QuizzService {
 		while (movie1.getImdbID() == movie2.getImdbID()) {
 			movie2 = chooseMovie();
 		}
-		
-		Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
-		Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
-		
-		Long answer = movie1Points > movie2Points ? 1L : 2L;
+
+		Quizz quizz = validatePointsAndSave(movie1, movie2, gameId);
 		
 		Game game = gameRepository.getOne(gameId);
-		
-		Quizz quizz = new Quizz(game, movie1.getImdbID(), movie2.getImdbID(), answer, false);
-		repository.save(quizz);
 		game.getQuizzes().add(quizz);
 		gameRepository.save(game);
 		
@@ -80,8 +76,7 @@ public class QuizzService {
 	
 	public GetMoviePropDTO chooseMovie() {
 		
-		String imdbRating = "N/A";
-		String imdbVotes = "N/A";
+		String imdbRating = "N/A",imdbVotes = "N/A";
 		GetMoviePropDTO movieProp = null ;
 		
 		while (imdbRating.equals("N/A") || imdbVotes.equals("N/A")) {
@@ -124,20 +119,13 @@ public class QuizzService {
 			GetMoviePropDTO movie1 = chooseMovie();
 			GetMoviePropDTO movie2 = chooseMovie();
 			
-			//Valida se o novo par de filme são iguais aos anteriores ou iguais entre si
+			//Valida se o novo par de filmes são iguais aos anteriores ou iguais entre si
 			while (movie1.getImdbID() == movie2.getImdbID() || (quizz.getMovie1() == movie1.getImdbID() && quizz.getMovie2() == movie2.getImdbID())
 					|| (quizz.getMovie1() == movie2.getImdbID() && quizz.getMovie2() == movie1.getImdbID()) ) {
 				movie2 = chooseMovie();
 			}
 			
-			Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
-			Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
-			Long answer = movie1Points > movie2Points ? 1L : 2L;
-			
-			Game gameCurrently = gameRepository.getOne(gameDto.getId());
-			Quizz newQuizz = new Quizz(gameCurrently, movie1.getImdbID(), movie2.getImdbID(), answer, false);
-			
-			repository.save(newQuizz);
+			Quizz newQuizz = validatePointsAndSave(movie1, movie2, gameDto.getId());
 			return newQuizz;
 		}else {
 			gameDto.setResponse("ACABOU! você errou o 3º quizz e perdeu o jogo!, o seu score foi de : " + game.getScore() + ", inicie um novo jogo para tentar novamente!");
@@ -148,4 +136,20 @@ public class QuizzService {
 		}
 		
 	}
+	
+	@Transactional
+	public Quizz validatePointsAndSave(GetMoviePropDTO movie1, GetMoviePropDTO movie2, Long gameId) {
+		
+		Integer movie1Points = (int) (Double.valueOf(movie1.getImdbRating())*Float.valueOf(movie1.getImdbVotes()));
+		Integer movie2Points = (int) (Double.valueOf(movie2.getImdbRating())*Float.valueOf(movie2.getImdbVotes()));
+		Long answer = movie1Points > movie2Points ? 1L : 2L;
+		
+		Game gameCurrently = gameRepository.getOne(gameId);
+		Quizz quizz = new Quizz(gameCurrently, movie1.getImdbID(), movie2.getImdbID(), answer, false);
+		
+		repository.save(quizz);
+		return quizz;
+	}
+	
+	
 }

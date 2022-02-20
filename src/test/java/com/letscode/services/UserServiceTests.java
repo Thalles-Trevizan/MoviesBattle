@@ -52,8 +52,6 @@ public class UserServiceTests {
 	private long emailNonExistingId;
 	private PageImpl<User> page;
 	private User user;
-//	private UserDTO userDTO;
-//	private UserInsertDTO userInsertDTO;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -63,8 +61,6 @@ public class UserServiceTests {
 		nonHimselfNeitherAdminId = 4L;
 		emailNonExistingId = 5L;
 		user = Factory.createUser();
-//		userDTO = Factory.createUserDTO();
-//		userInsertDTO = Factory.createUserInsertDTO();
 		page = new PageImpl<>(List.of(user));
 
 		Mockito.when(repository.save(ArgumentMatchers.any())).thenReturn(user);

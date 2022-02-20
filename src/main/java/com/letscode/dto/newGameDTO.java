@@ -10,7 +10,7 @@ public class newGameDTO implements Serializable {
 	private Long gameId;
 	private String response;
 	private UserGameDTO user;
-	private QuizzGameDTO quizz;
+	private QuizzGameDTO newQuizz;
 	private Boolean openGame;
 
 	public newGameDTO() {
@@ -56,11 +56,11 @@ public class newGameDTO implements Serializable {
 	}
 
 	public QuizzGameDTO getQuizz() {
-		return quizz;
+		return newQuizz;
 	}
 
-	public void setQuizz(QuizzGameDTO quizz) {
-		this.quizz = quizz;
+	public void setQuizz(QuizzGameDTO newQuizz) {
+		this.newQuizz = newQuizz;
 	}
 
 	public Boolean getOpenGame() {
