@@ -79,6 +79,7 @@ O jogo manterá uma tabela de ranking com os jogos realizados, o nome do jogador
 
 (imagem exemplo: H2 local)
 
+Você também pode acompanhar as informações nas tabelas do jogo enquanto joga pelo link localhost:8080/h2-console/login.jsp
 
 # Autor
 
