@@ -43,6 +43,7 @@ Ou utilizando um dos dois players pré-cadastrados para demo do jogo
 ![image](https://user-images.githubusercontent.com/55063360/154869681-95322f1e-b461-40b4-909b-e51426512939.png)
 
 Assim que escolher se irá criar o seu player ou jogar com um pré existente, basta fazer o login em {{host}}/oauth/token para receber o seu token e começar a utilizar os endpoints do jogo(Obs: tirando o post de criação de novo usuário, todos os outros endpoints é necessário estar logado para utilizar)
+
 Exemplo de chamada e retorno da autenticação:
 
 ![image](https://user-images.githubusercontent.com/55063360/154869685-1f094ae9-f3b9-46ec-b65b-50b75b184e96.png)
@@ -60,26 +61,30 @@ Enviando no campo {quizzId} o id do quizz  que você deseja responder (recebido 
 
 ![image](https://user-images.githubusercontent.com/55063360/154869737-51cef0f5-f8b2-4003-9350-56d85c1e9e6d.png)
 
-Assim que vc errar 3 vezes, seu jogo é finalizado, e é necessário iniciar um novo jogo na rota game/start 
+Assim que você errar 3 vezes, seu jogo é finalizado, e é necessário iniciar um novo jogo na rota game/start 
+
+![image](https://user-images.githubusercontent.com/55063360/154870460-ff12376f-e1a2-4058-80fd-77a8ff3a24dc.png)
+
 
 Caso queira finalizar o jogo antes de errar 3 vezes, basta chamar a rota game/finish
 {{host}}/game/finish
 
 ![image](https://user-images.githubusercontent.com/55063360/154869750-65f48368-ee23-4d0c-b97d-d864362d1684.png)
 
-Se você tentar iniciar um jogo sem estar logado, fechar o jogo, sem ter iniciado  um, ou tentar responder um quizz sem ter um jogo em andamento, você receberá um Unauthorized Exception como resposta
+Se você tentar iniciar um jogo sem estar logado, fechar o jogo, sem ter iniciado  um, ou tentar responder um quizz sem ter um jogo em andamento, você receberá um Unathorized Exception como resposta
 Exemplo no caso de fechar um jogo sem ter um aberto:
 
 ![image](https://user-images.githubusercontent.com/55063360/154869759-46278579-2330-49fc-8470-1d33a2979a31.png)
 
 você também não consegue gerar um novo quizz sem antes responder o anterior
+
 O jogo manterá uma tabela de ranking com os jogos realizados, o nome do jogador e o seu score 
 
 ![image](https://user-images.githubusercontent.com/55063360/154869774-dfb959e3-899f-42a6-ad8d-9cfda3250085.png)
 
 (imagem exemplo: H2 local)
 
-Você também pode acompanhar as informações nas tabelas do jogo enquanto joga pelo link localhost:8080/h2-console/login.jsp
+Você também pode acompanhar as informações nas tabelas do jogo enquanto joga pelo navegador no link: localhost:8080/h2-console/login.jsp
 
 # Autor
 
